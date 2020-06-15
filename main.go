@@ -8,7 +8,6 @@ import (
 	"runtime"
 	"strings"
 	"sync"
-	"time"
 )
 
 func getSplitArgAndFiles(arguments ...string) ([]string, []string) {
@@ -88,13 +87,11 @@ func main() {
 	var wg sync.WaitGroup
 	numOfCores := runtime.NumCPU()
 
-	start := time.Now()
-
 	arguments := os.Args[1:]
 
-	// if os.Args[1] == "--help" {
-	// 	fmt.Println("This is a command line utlity created to run zgrep in parallel! Please refere zgrep documentation to use pzgrep.")
-	// }
+	if os.Args[1] == "--help" {
+		fmt.Println("This is the command line utlity to run zgrep in parallel! Please follow zgrep documentation to use pzgrep.")
+	}
 
 	options, files := getSplitArgAndFiles(arguments...)
 
@@ -115,7 +112,5 @@ func main() {
 		}()
 	}
 	wg.Wait()
-	duration := time.Since(start)
 
-	fmt.Println(duration)
 }
